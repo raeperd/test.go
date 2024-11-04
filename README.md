@@ -71,8 +71,6 @@ test.True(t, o.IsValid())
 test.True(t, len(pages) >= 20)
 ```
 
-Test using goldenfiles:
-
 ## Philosophy
 Tests usually should not fail. When they do fail, the failure should be repeatable. Therefore, it doesn't make sense to spend a lot of time writing good test messages. (This is unlike error messages, which should happen fairly often, and in production, irrepeatably.) Package test is designed to simply fail a test quickly and quietly if a condition is not met with a reference to the line number of the failing test. If the reason for having the test is not immediately clear from context, you can write a comment, just like in normal code. If you do need more extensive reporting to figure out why a test is failing, use `test.DebugLog` or `test.Debug` to capture more information.
 
