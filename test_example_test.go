@@ -13,8 +13,8 @@ func Example() {
 	test.Equal(t, "hello", "world")     // bad
 	test.Equal(t, "goodbye", "goodbye") // good
 
-	test.Unequal(t, "hello", "world")     // good
-	test.Unequal(t, "goodbye", "goodbye") // bad
+	test.NotEqual(t, "hello", "world")     // good
+	test.NotEqual(t, "goodbye", "goodbye") // bad
 
 	s := []int{1, 2, 3}
 	test.AllEqual(t, []int{1, 2, 3}, s) // good

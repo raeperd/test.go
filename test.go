@@ -13,8 +13,8 @@ func Equal[T comparable](t testing.TB, want, got T) {
 	}
 }
 
-// Unequal calls t.Fatalf if got == bad.
-func Unequal[T comparable](t testing.TB, bad, got T) {
+// NotEqual calls t.Fatalf if got == bad.
+func NotEqual[T comparable](t testing.TB, bad, got T) {
 	t.Helper()
 	if got == bad {
 		t.Fatalf("got: %v", got)

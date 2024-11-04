@@ -42,7 +42,7 @@ func ExampleDebug() {
 			// record some debug information about y2
 			fmt.Println("y2:", y2)
 		})
-		test.Unequal(t, y, 3)
+		test.NotEqual(t, y, 3)
 	})
 	// Output:
 	// want: 2; got: 3
@@ -69,7 +69,7 @@ func ExampleDebugLog() {
 		test.DebugLog(t, "y: %d", y)
 		y = 2
 		test.DebugLog(t, "y: %d", y)
-		test.Unequal(t, y, 3)
+		test.NotEqual(t, y, 3)
 	})
 	// Output:
 	// want: 2; got: 3

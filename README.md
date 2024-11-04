@@ -26,8 +26,8 @@ test.Equal(t, 200, resp.StatusCode)
 test.Equal(t, tc.wantPtr, gotPtr)
 
 // Test for inequality
-test.Unequal(t, "hello", "world")     // good
-test.Unequal(t, "goodbye", "goodbye") // bad
+test.NotEqual(t, "hello", "world")     // good
+test.NotEqual(t, "goodbye", "goodbye") // bad
 // t.Fatal("got: goodbye")
 ```
 
