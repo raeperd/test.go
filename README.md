@@ -1,4 +1,5 @@
-# test  
+# test   
+[![.github/workflows/build.yaml](https://github.com/raeperd/test/actions/workflows/build.yaml/badge.svg)](https://github.com/raeperd/test/actions/workflows/build.yaml) [![Go Report Card](https://goreportcard.com/badge/github.com/raeperd/test)](https://goreportcard.com/report/github.com/raeperd/test) [![codecov](https://codecov.io/gh/raeperd/test/graph/badge.svg?token=UCZDF4EIXD)](https://codecov.io/gh/raeperd/test)  
 Package test is the minimalist testing helper for Go.
 
 Forked from [earthboundkid/be](https://github.com/earthboundkid/be), Inspired by [Mat Ryer](https://github.com/matryer/is) and [Alex Edwards](https://www.alexedwards.net/blog/easy-test-assertions-with-go-generics).
