@@ -56,11 +56,11 @@ test.Nonzero(t, err) // good
 Check substring containment:
 
 ```go
-test.In(t, "world", "hello, world") // good
-test.In(t, "World", "hello, world") // bad
+test.Contains(t, "hello, world", "world") // good
+test.Contains(t, "hello, world", "World") // bad
 // t.Fatal("World" not in "hello, world")
-test.NotIn(t, "\x01", []byte("\a\b\x00\r\t")) // good
-test.NotIn(t, "\x00", []byte("\a\b\x00\r\t")) // bad
+test.NotContains(t, []byte("\a\b\x00\r\t"), "\x01") // good
+test.NotContains(t, []byte("\a\b\x00\r\t"), "\x00") // bad
 // t.Fatal("\x00" in "\a\b\x00\r\t")
 ```
 

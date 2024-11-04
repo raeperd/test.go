@@ -29,10 +29,10 @@ func Example() {
 
 	type mytype string
 	var mystring mytype = "hello, world"
-	test.In(t, "world", mystring)                 // good
-	test.In(t, "World", mystring)                 // bad
-	test.NotIn(t, "\x01", []byte("\a\b\x00\r\t")) // good
-	test.NotIn(t, "\x00", []byte("\a\b\x00\r\t")) // bad
+	test.Contains(t, "world", mystring)                 // good
+	test.Contains(t, "World", mystring)                 // bad
+	test.NotContains(t, "\x01", []byte("\a\b\x00\r\t")) // good
+	test.NotContains(t, "\x00", []byte("\a\b\x00\r\t")) // bad
 
 	// Output:
 	// want: hello; got: world
