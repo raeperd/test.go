@@ -1,8 +1,6 @@
-name: Go
-
 on: [ push, pull_request ]
-jobs:
 
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
@@ -13,5 +11,7 @@ jobs:
         cache: true
     - run: make build
     - run: make test
+    - uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}k
 
-   # TODO: Add codecov
