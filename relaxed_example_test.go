@@ -1,9 +1,9 @@
-package be_test
+package test_test
 
 import (
 	"testing"
 
-	"github.com/carlmjohnson/be"
+	"github.com/raeperd/test"
 )
 
 func ExampleRelaxed() {
@@ -11,14 +11,14 @@ func ExampleRelaxed() {
 	t := &mockingT{}
 
 	t.Run("dies on first error", func(*testing.T) {
-		be.Equal(t, 1, 2)
-		be.Equal(t, 3, 4)
+		test.Equal(t, 1, 2)
+		test.Equal(t, 3, 4)
 	})
 
 	t.Run("shows multiple errors", func(*testing.T) {
-		relaxedT := be.Relaxed(t)
-		be.Equal(relaxedT, 5, 6)
-		be.Equal(relaxedT, 7, 8)
+		relaxedT := test.Relaxed(t)
+		test.Equal(relaxedT, 5, 6)
+		test.Equal(relaxedT, 7, 8)
 	})
 	// Output:
 	// want: 1; got: 2

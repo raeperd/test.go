@@ -1,38 +1,38 @@
-package be_test
+package test_test
 
 import (
 	"errors"
 
-	"github.com/carlmjohnson/be"
+	"github.com/raeperd/test"
 )
 
 func Example() {
 	// mock *testing.T for example purposes
-	t := be.Relaxed(&mockingT{})
+	t := test.Relaxed(&mockingT{})
 
-	be.Equal(t, "hello", "world")     // bad
-	be.Equal(t, "goodbye", "goodbye") // good
+	test.Equal(t, "hello", "world")     // bad
+	test.Equal(t, "goodbye", "goodbye") // good
 
-	be.Unequal(t, "hello", "world")     // good
-	be.Unequal(t, "goodbye", "goodbye") // bad
+	test.Unequal(t, "hello", "world")     // good
+	test.Unequal(t, "goodbye", "goodbye") // bad
 
 	s := []int{1, 2, 3}
-	be.AllEqual(t, []int{1, 2, 3}, s) // good
-	be.AllEqual(t, []int{3, 2, 1}, s) // bad
+	test.AllEqual(t, []int{1, 2, 3}, s) // good
+	test.AllEqual(t, []int{3, 2, 1}, s) // bad
 
 	var err error
-	be.NilErr(t, err)  // good
-	be.Nonzero(t, err) // bad
+	test.NilErr(t, err)  // good
+	test.Nonzero(t, err) // bad
 	err = errors.New("(O_o)")
-	be.NilErr(t, err)  // bad
-	be.Nonzero(t, err) // good
+	test.NilErr(t, err)  // bad
+	test.Nonzero(t, err) // good
 
 	type mytype string
 	var mystring mytype = "hello, world"
-	be.In(t, "world", mystring)                 // good
-	be.In(t, "World", mystring)                 // bad
-	be.NotIn(t, "\x01", []byte("\a\b\x00\r\t")) // good
-	be.NotIn(t, "\x00", []byte("\a\b\x00\r\t")) // bad
+	test.In(t, "world", mystring)                 // good
+	test.In(t, "World", mystring)                 // bad
+	test.NotIn(t, "\x01", []byte("\a\b\x00\r\t")) // good
+	test.NotIn(t, "\x00", []byte("\a\b\x00\r\t")) // bad
 
 	// Output:
 	// want: hello; got: world

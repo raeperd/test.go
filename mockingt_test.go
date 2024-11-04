@@ -1,4 +1,4 @@
-package be_test
+package test_test
 
 import (
 	"fmt"

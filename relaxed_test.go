@@ -1,9 +1,9 @@
-package be_test
+package test_test
 
 import (
 	"testing"
 
-	"github.com/carlmjohnson/be"
+	"github.com/raeperd/test"
 )
 
 func runTest(test func(*testing.T)) bool {
@@ -14,12 +14,12 @@ func runTest(test func(*testing.T)) bool {
 
 func TestRelaxed(t *testing.T) {
 	finished := false
-	be.False(t, runTest(func(t *testing.T) {
-		rt := be.Relaxed(t)
+	test.False(t, runTest(func(t *testing.T) {
+		rt := test.Relaxed(t)
 		rt.FailNow()
 		rt.Fatal("boom!")
 		rt.Fatalf("msg: %v", "boom!")
 		finished = true
 	}))
-	be.True(t, finished)
+	test.True(t, finished)
 }
