@@ -9,20 +9,20 @@ import (
 
 type mockingT struct {
 	testing.T
-	m         sync.Mutex
+	sync.RWMutex
 	hasFailed bool
 	cleanups  []func()
 }
 
 func (m *mockingT) setFailed(b bool) {
-	m.m.Lock()
-	defer m.m.Unlock()
+	m.Lock()
+	defer m.Unlock()
 	m.hasFailed = b
 }
 
 func (m *mockingT) failed() bool {
-	m.m.Lock()
-	defer m.m.Unlock()
+	m.RLock()
+	defer m.RUnlock()
 	return m.hasFailed
 }
 
