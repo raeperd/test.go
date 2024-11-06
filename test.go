@@ -44,8 +44,8 @@ func Zero[T any](t testing.TB, value T) {
 	}
 }
 
-// Nonzero calls t.Fatalf if value == the zero value for T.
-func Nonzero[T any](t testing.TB, value T) {
+// NotZero calls t.Fatalf if value == the zero value for T.
+func NotZero[T any](t testing.TB, value T) {
 	t.Helper()
 	if !truthy(value) {
 		t.Fatalf("got: %v", value)

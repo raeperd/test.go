@@ -22,10 +22,10 @@ func Example() {
 
 	var err error
 	test.NilErr(t, err)  // good
-	test.Nonzero(t, err) // bad
+	test.NotZero(t, err) // bad
 	err = errors.New("(O_o)")
 	test.NilErr(t, err)  // bad
-	test.Nonzero(t, err) // good
+	test.NotZero(t, err) // good
 
 	type mytype string
 	var mystring mytype = "hello, world"
