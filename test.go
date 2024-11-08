@@ -74,6 +74,14 @@ func Nil(t testing.TB, v any) {
 	}
 }
 
+// NotNil calls t.Fatalf if v is nil.
+func NotNil(t testing.TB, v any) {
+	t.Helper()
+	if v == nil {
+		t.Fatalf("got: %v", v)
+	}
+}
+
 // True calls t.Fatalf if value is not true.
 func True(t testing.TB, value bool) {
 	t.Helper()

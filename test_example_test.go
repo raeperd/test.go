@@ -21,11 +21,11 @@ func Example() {
 	test.AllEqual(t, []int{3, 2, 1}, s) // bad
 
 	var err error
-	test.Nil(t, err)     // good
-	test.NotZero(t, err) // bad
+	test.Nil(t, err)    // good
+	test.NotNil(t, err) // bad
 	err = errors.New("(O_o)")
-	test.Nil(t, err)     // bad
-	test.NotZero(t, err) // good
+	test.Nil(t, err)    // bad
+	test.NotNil(t, err) // good
 
 	type mytype string
 	var mystring mytype = "hello, world"

@@ -46,12 +46,12 @@ Handle errors:
 ```go
 var err error
 test.Nil(t, err)   // good
-test.NotZero(t, err) // bad
+test.NotNil(t, err) // bad
 // t.Fatal("got: <nil>")
 err = errors.New("(O_o)")
 test.Nil(t, err)   // bad
 // t.Fatal("got: (O_o)")
-test.NotZero(t, err) // good
+test.NotNil(t, err) // good
 ```
 
 Check substring containment:
