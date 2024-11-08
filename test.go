@@ -1,7 +1,6 @@
 package test
 
 import (
-	"bytes"
 	"reflect"
 	"strings"
 	"testing"
@@ -109,30 +108,22 @@ func False(t testing.TB, value bool) {
 	}
 }
 
-// Contains calls t.Fatalf if needle is not contained in the string or []byte haystack.
-func Contains[byteseq ~string | ~[]byte](t testing.TB, needle string, haystack byteseq) {
+// Contains calls t.Fatalf if needle is not contained in the string haystack.
+func Contains[S ~string](t testing.TB, haystack S, needle S) {
 	t.Helper()
 	if !contains(haystack, needle) {
 		t.Fatalf("%q not in %q", needle, haystack)
 	}
 }
 
-// NotContains calls t.Fatalf if needle is contained in the string or []byte haystack.
-func NotContains[byteseq ~string | ~[]byte](t testing.TB, needle string, haystack byteseq) {
+// NotContains calls t.Fatalf if needle is contained in the string haystack.
+func NotContains[S ~string](t testing.TB, haystack S, needle S) {
 	t.Helper()
 	if contains(haystack, needle) {
 		t.Fatalf("%q in %q", needle, haystack)
 	}
 }
 
-func contains[byteseq ~string | ~[]byte](haystack byteseq, needle string) bool {
-	rv := reflect.ValueOf(haystack)
-	switch rv.Kind() {
-	case reflect.String:
-		return strings.Contains(rv.String(), needle)
-	case reflect.Slice:
-		return bytes.Contains(rv.Bytes(), []byte(needle))
-	default:
-		panic("unreachable")
-	}
+func contains[S ~string](haystack S, needle S) bool {
+	return strings.Contains(string(haystack), string(needle))
 }

@@ -32,10 +32,11 @@ func Example() {
 
 	type mytype string
 	var mystring mytype = "hello, world"
-	test.Contains(t, "world", mystring)                 // good
-	test.Contains(t, "World", mystring)                 // bad
-	test.NotContains(t, "\x01", []byte("\a\b\x00\r\t")) // good
-	test.NotContains(t, "\x00", []byte("\a\b\x00\r\t")) // bad
+	test.Contains(t, mystring, "world") // good
+	test.Contains(t, mystring, "World") // bad
+
+	test.NotContains(t, mystring, "World") // good
+	test.NotContains(t, mystring, "world") // bad
 
 	// Output:
 	// want: hello; got: world
@@ -45,5 +46,5 @@ func Example() {
 	// got: <nil>
 	// got: (O_o)
 	// "World" not in "hello, world"
-	// "\x00" in "\a\b\x00\r\t"
+	// "world" in "hello, world"
 }

@@ -33,6 +33,8 @@ func Test(t *testing.T) {
 	beOkay(func(tb testing.TB) { test.NotNil(tb, errors.New("")) })
 	beOkay(func(tb testing.TB) { test.True(tb, true) })
 	beOkay(func(tb testing.TB) { test.False(tb, false) })
+	beOkay(func(tb testing.TB) { test.Contains(tb, "hello world", "world") })
+	beOkay(func(tb testing.TB) { test.NotContains(tb, "hello world", "World") })
 	beBad := func(callback func(tb testing.TB)) {
 		t.Helper()
 		var buf strings.Builder
@@ -53,6 +55,8 @@ func Test(t *testing.T) {
 	beBad(func(tb testing.TB) { test.NotNil(tb, nil) })
 	beBad(func(tb testing.TB) { test.True(tb, false) })
 	beBad(func(tb testing.TB) { test.False(tb, true) })
+	beBad(func(tb testing.TB) { test.Contains(tb, "hello world", "World") })
+	beBad(func(tb testing.TB) { test.NotContains(tb, "hello world", "world") })
 }
 
 type mockingT struct {
