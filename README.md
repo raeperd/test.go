@@ -7,7 +7,7 @@ Forked from [earthboundkid/be](https://github.com/earthboundkid/be), Inspired by
 ## Features
 
 - Simple and readable test assertions using generics
-- Built-in helpers for common cases like `test.NilErr` and `test.In`
+- Built-in helpers for common cases like `test.Nil` and `test.Contains`
 - Fail fast by default but easily switch to relaxed with `test.Relaxed(t)`
 - Helpers for testing against golden files with the testfile subpackage
 - No dependencies: just uses standard library
@@ -45,11 +45,11 @@ Handle errors:
 
 ```go
 var err error
-test.NilErr(t, err)   // good
+test.Nil(t, err)   // good
 test.NotZero(t, err) // bad
 // t.Fatal("got: <nil>")
 err = errors.New("(O_o)")
-test.NilErr(t, err)   // bad
+test.Nil(t, err)   // bad
 // t.Fatal("got: (O_o)")
 test.NotZero(t, err) // good
 ```

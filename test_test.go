@@ -40,7 +40,7 @@ func Test(t *testing.T) {
 	beOkay(func(tb testing.TB) { test.Zero(tb, time.Time{}.Local()) })
 	beOkay(func(tb testing.TB) { test.Zero(tb, []string(nil)) })
 	beOkay(func(tb testing.TB) { test.NotZero(tb, []string{""}) })
-	beOkay(func(tb testing.TB) { test.NilErr(tb, nil) })
+	beOkay(func(tb testing.TB) { test.Nil(tb, nil) })
 	beOkay(func(tb testing.TB) { test.True(tb, true) })
 	beOkay(func(tb testing.TB) { test.False(tb, false) })
 	beBad := func(callback func(tb testing.TB)) {
@@ -59,7 +59,7 @@ func Test(t *testing.T) {
 	beBad(func(tb testing.TB) { test.NotZero(tb, time.Time{}.Local()) })
 	beBad(func(tb testing.TB) { test.Zero(tb, []string{""}) })
 	beBad(func(tb testing.TB) { test.NotZero(tb, []string(nil)) })
-	beBad(func(tb testing.TB) { test.NilErr(tb, errors.New("")) })
+	beBad(func(tb testing.TB) { test.Nil(tb, errors.New("")) })
 	beBad(func(tb testing.TB) { test.True(tb, false) })
 	beBad(func(tb testing.TB) { test.False(tb, true) })
 }

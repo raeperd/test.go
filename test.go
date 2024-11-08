@@ -66,8 +66,8 @@ func isZero[T any](v T) bool {
 	}
 }
 
-// NilErr calls t.Fatalf if err is not nil.
-func NilErr(t testing.TB, err error) {
+// Nil calls t.Fatalf if err is not nil.
+func Nil(t testing.TB, err error) {
 	t.Helper()
 	if err != nil {
 		t.Fatalf("got: %v", err)
