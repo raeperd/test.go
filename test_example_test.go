@@ -16,6 +16,9 @@ func Example() {
 	test.NotEqual(t, "hello", "world")     // good
 	test.NotEqual(t, "goodbye", "goodbye") // bad
 
+	test.DeepEqual(t, map[int]bool{1: true, 2: false}, map[int]bool{1: true, 2: false}) // good
+	test.DeepEqual(t, nil, []int{})                                                     // bad
+
 	s := []int{1, 2, 3}
 	test.AllEqual(t, []int{1, 2, 3}, s) // good
 	test.AllEqual(t, []int{3, 2, 1}, s) // bad
@@ -37,6 +40,7 @@ func Example() {
 	// Output:
 	// want: hello; got: world
 	// got: goodbye
+	// reflect.DeepEqual([]int(nil), []int{}) == false
 	// want: [3 2 1]; got: [1 2 3]
 	// got: <nil>
 	// got: (O_o)
