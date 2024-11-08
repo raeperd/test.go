@@ -39,7 +39,7 @@ func AllEqual[T comparable](t testing.TB, want, got []T) {
 // Zero calls t.Fatalf if value != the zero value for T.
 func Zero[T any](t testing.TB, value T) {
 	t.Helper()
-	if truthy(value) {
+	if !isZero(value) {
 		t.Fatalf("got: %v", value)
 	}
 }
@@ -47,25 +47,22 @@ func Zero[T any](t testing.TB, value T) {
 // NotZero calls t.Fatalf if value == the zero value for T.
 func NotZero[T any](t testing.TB, value T) {
 	t.Helper()
-	if !truthy(value) {
+	if isZero(value) {
 		t.Fatalf("got: %v", value)
 	}
 }
 
-func truthy[T any](v T) bool {
+func isZero[T any](v T) bool {
 	switch m := any(v).(type) {
 	case interface{ IsZero() bool }:
-		return !m.IsZero()
+		return m.IsZero()
 	}
-	return reflectValue(&v)
-}
 
-func reflectValue(vp any) bool {
-	switch rv := reflect.ValueOf(vp).Elem(); rv.Kind() {
+	switch rv := reflect.ValueOf(&v).Elem(); rv.Kind() {
 	case reflect.Map, reflect.Slice:
-		return rv.Len() != 0
+		return rv.Len() == 0
 	default:
-		return !rv.IsZero()
+		return rv.IsZero()
 	}
 }
 
