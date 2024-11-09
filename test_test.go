@@ -14,53 +14,79 @@ import (
 )
 
 func Test(t *testing.T) {
-	beOkay := func(callback func(tb testing.TB)) {
+	test.Equal(t, 1, 1)
+	test.NotEqual(t, 1, 2)
+
+	test.Zero(t, time.Time{}.Local())
+	test.Zero(t, []string(nil))
+	test.NotZero(t, []string{""})
+
+	test.Nil(t, nil)
+	test.NotNil(t, errors.New(""))
+
+	test.True(t, true)
+	test.False(t, false)
+
+	test.Contains(t, "hello world", "world")
+	test.Contains(t, []int{1, 2, 3, 4, 5}, 3)
+	test.NotContains(t, "hello world", "World")
+	test.NotContains(t, []int{1, 2, 3, 4, 5}, 6)
+}
+
+func TestNot(t *testing.T) {
+	testFail := func(t *testing.T, want string, testFunc func(*mockingT)) {
 		t.Helper()
 		var buf strings.Builder
-		mt := &mockingT{w: &buf}
-		callback(mt)
-		if mt.Failed() {
-			t.Fatal("failed too soon")
-		}
-		if buf.String() != "" {
-			t.Fatal("wrote too much")
+		m := &mockingT{w: &buf}
+
+		testFunc(m)
+		if len(want) != 0 { // if want is not empty test message
+			test.Equal(t, want, buf.String())
 		}
 	}
-	beOkay(func(tb testing.TB) { test.Zero(tb, time.Time{}.Local()) })
-	beOkay(func(tb testing.TB) { test.Zero(tb, []string(nil)) })
-	beOkay(func(tb testing.TB) { test.NotZero(tb, []string{""}) })
-	beOkay(func(tb testing.TB) { test.Nil(tb, nil) })
-	beOkay(func(tb testing.TB) { test.NotNil(tb, errors.New("")) })
-	beOkay(func(tb testing.TB) { test.True(tb, true) })
-	beOkay(func(tb testing.TB) { test.False(tb, false) })
-	beOkay(func(tb testing.TB) { test.Contains(tb, "hello world", "world") })
-	beOkay(func(tb testing.TB) { test.Contains(t, []int{1, 2, 3, 4, 5}, 3) })
-	beOkay(func(tb testing.TB) { test.NotContains(tb, "hello world", "World") })
-	beOkay(func(tb testing.TB) { test.NotContains(t, []int{1, 2, 3, 4, 5}, 6) })
-	beBad := func(callback func(tb testing.TB)) {
-		t.Helper()
-		var buf strings.Builder
-		mt := &mockingT{w: &buf}
-		callback(mt)
-		if !mt.Failed() {
-			t.Fatal("did not fail")
-		}
-		if buf.String() == "" {
-			t.Fatal("wrote too little")
-		}
-	}
-	beBad(func(tb testing.TB) { test.AllEqual(tb, []string{}, []string{""}) })
-	beBad(func(tb testing.TB) { test.NotZero(tb, time.Time{}.Local()) })
-	beBad(func(tb testing.TB) { test.Zero(tb, []string{""}) })
-	beBad(func(tb testing.TB) { test.NotZero(tb, []string(nil)) })
-	beBad(func(tb testing.TB) { test.Nil(tb, errors.New("")) })
-	beBad(func(tb testing.TB) { test.NotNil(tb, nil) })
-	beBad(func(tb testing.TB) { test.True(tb, false) })
-	beBad(func(tb testing.TB) { test.False(tb, true) })
-	beBad(func(tb testing.TB) { test.Contains(tb, "hello world", "World") })
-	beBad(func(tb testing.TB) { test.Contains(tb, []int{1, 2, 3, 4, 5}, 6) })
-	beBad(func(tb testing.TB) { test.NotContains(tb, "hello world", "world") })
-	beBad(func(tb testing.TB) { test.NotContains(tb, []int{1, 2, 3, 4, 5}, 3) })
+
+	testFail(t, "want: 1; got: 2", func(m *mockingT) {
+		test.Equal(m, 1, 2)
+	})
+	testFail(t, "got: 1", func(m *mockingT) {
+		test.NotEqual(m, 1, 1)
+	})
+	testFail(t, "len(want): 0; len(got): 1", func(m *mockingT) {
+		test.AllEqual(m, []string{}, []string{""})
+	})
+	testFail(t, "", func(m *mockingT) { // skip message test, local time is not predictable
+		test.NotZero(m, time.Time{}.Local())
+	})
+	testFail(t, "got: []", func(m *mockingT) {
+		test.Zero(m, []string{""})
+	})
+	testFail(t, "got: []", func(m *mockingT) {
+		test.NotZero(m, []string(nil))
+	})
+	testFail(t, "got: ", func(m *mockingT) {
+		test.Nil(m, errors.New(""))
+	})
+	testFail(t, "got: <nil>", func(m *mockingT) {
+		test.NotNil(m, nil)
+	})
+	testFail(t, "got: false", func(m *mockingT) {
+		test.True(m, false)
+	})
+	testFail(t, "got: true", func(m *mockingT) {
+		test.False(m, true)
+	})
+	testFail(t, `"World" not in "hello world"`, func(m *mockingT) {
+		test.Contains(m, "hello world", "World")
+	})
+	testFail(t, "6 not in [1 2 3 4 5]", func(m *mockingT) {
+		test.Contains(m, []int{1, 2, 3, 4, 5}, 6)
+	})
+	testFail(t, `"world" in "hello world"`, func(m *mockingT) {
+		test.NotContains(m, "hello world", "world")
+	})
+	testFail(t, "3 in [1 2 3 4 5]", func(m *mockingT) {
+		test.NotContains(m, []int{1, 2, 3, 4, 5}, 3)
+	})
 }
 
 func TestContains(t *testing.T) {
