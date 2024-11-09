@@ -3,6 +3,7 @@ package test
 import (
 	"fmt"
 	"reflect"
+	"slices"
 	"strings"
 	"testing"
 )
@@ -142,11 +143,8 @@ func containsElement[H interface{ ~string | []N }, N comparable](haystack H, nee
 		}
 		return fmt.Sprintf("%q not in %q", n, h), false
 	case []N:
-		// TODO: refactor this using slices.Contains
-		for _, v := range h {
-			if v == needle {
-				return fmt.Sprintf("%v in %v", needle, haystack), true
-			}
+		if slices.Contains(h, needle) {
+			return fmt.Sprintf("%v in %v", needle, haystack), true
 		}
 		return fmt.Sprintf("%v not in %v", needle, haystack), false
 	default: // h is custom string type
