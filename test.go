@@ -116,8 +116,9 @@ func False(t testing.TB, value bool) {
 func Contains[H interface{ ~string | []N }, N comparable](t testing.TB, haystack H, needle N) {
 	t.Helper()
 	msg, found := containsElement(haystack, needle)
+	// TODO: Fix this to use t.Fatal
 	if !found {
-		t.Fatal(msg)
+		t.Fatalf("%s", msg)
 	}
 }
 
@@ -126,8 +127,9 @@ func Contains[H interface{ ~string | []N }, N comparable](t testing.TB, haystack
 func NotContains[H interface{ ~string | []N }, N comparable](t testing.TB, haystack H, needle N) {
 	t.Helper()
 	msg, found := containsElement(haystack, needle)
+	// TODO: Fix this to use t.Fatal
 	if found {
-		t.Fatal(msg)
+		t.Fatalf("%s", msg)
 	}
 }
 

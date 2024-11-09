@@ -149,17 +149,6 @@ func (m *mockingT) Fatalf(format string, args ...any) {
 	}
 }
 
-func (m *mockingT) Fatal(args ...any) {
-	m.setFailed(true)
-	if m.w != nil {
-		fmt.Fprint(m.w, args...)
-		// Do not call runtime.Goexit here, so that caller can read the output
-	} else {
-		m.Error(args...)
-		runtime.Goexit()
-	}
-}
-
 func (m *mockingT) Errorf(format string, args ...any) {
 	m.setFailed(true)
 	fmt.Printf(format+"\n", args...)
