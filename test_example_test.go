@@ -32,11 +32,15 @@ func Example() {
 
 	type mytype string
 	var mystring mytype = "hello, world"
-	test.Contains(t, mystring, "world") // good
-	test.Contains(t, mystring, "World") // bad
+	test.Contains(t, mystring, "world")       // good
+	test.Contains(t, mystring, "World")       // bad
+	test.Contains(t, []int{1, 2, 3, 4, 5}, 3) // good
+	test.Contains(t, []int{1, 2, 3, 4, 5}, 6) // bad
 
-	test.NotContains(t, mystring, "World") // good
-	test.NotContains(t, mystring, "world") // bad
+	test.NotContains(t, mystring, "World")       // good
+	test.NotContains(t, mystring, "world")       // bad
+	test.NotContains(t, []int{1, 2, 3, 4, 5}, 6) // good
+	test.NotContains(t, []int{1, 2, 3, 4, 5}, 3) // bad
 
 	// Output:
 	// want: hello; got: world
@@ -46,5 +50,7 @@ func Example() {
 	// got: <nil>
 	// got: (O_o)
 	// "World" not in "hello, world"
+	// 6 not in [1 2 3 4 5]
 	// "world" in "hello, world"
+	// 3 in [1 2 3 4 5]
 }
