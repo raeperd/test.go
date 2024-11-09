@@ -115,19 +115,9 @@ func False(t testing.TB, value bool) {
 // When H is a slice, N is same type as the slice elements for direct comparison.
 func Contains[H interface{ ~string | []N }, N comparable](t testing.TB, haystack H, needle N) {
 	t.Helper()
-	if !containsElement(haystack, needle) {
-		// TODO: remove this type switch, generate error message in containsElement func
-		switch h := any(haystack).(type) {
-		case string:
-			n := fmt.Sprintf("%v", needle)
-			t.Fatalf("%q not in %q", n, h)
-		case []N:
-			t.Fatalf("%v not in %v", needle, haystack)
-		default: // h is custom string type
-			hn := fmt.Sprintf("%v", haystack)
-			n := fmt.Sprintf("%v", needle)
-			t.Fatalf("%q not in %q", n, hn)
-		}
+	msg, found := containsElement(haystack, needle)
+	if !found {
+		t.Fatal(msg)
 	}
 }
 
@@ -135,38 +125,34 @@ func Contains[H interface{ ~string | []N }, N comparable](t testing.TB, haystack
 // For type of H, N see [Contains]
 func NotContains[H interface{ ~string | []N }, N comparable](t testing.TB, haystack H, needle N) {
 	t.Helper()
-	if containsElement(haystack, needle) {
-		switch h := any(haystack).(type) {
-		case string:
-			n := fmt.Sprintf("%v", needle)
-			t.Fatalf("%q in %q", n, h)
-		case []N:
-			t.Fatalf("%v in %v", needle, haystack)
-		default: // h is custom string type
-			hn := fmt.Sprintf("%v", haystack)
-			n := fmt.Sprintf("%v", needle)
-			t.Fatalf("%q in %q", n, hn)
-		}
+	msg, found := containsElement(haystack, needle)
+	if found {
+		t.Fatal(msg)
 	}
 }
 
-// containsElement checks if needle exists in haystack
-func containsElement[H interface{ ~string | []N }, N comparable](haystack H, needle N) bool {
+func containsElement[H interface{ ~string | []N }, N comparable](haystack H, needle N) (string, bool) {
 	switch h := any(haystack).(type) {
 	case string:
 		n := fmt.Sprintf("%v", needle)
-		return strings.Contains(h, n)
+		if strings.Contains(h, n) {
+			return fmt.Sprintf("%q in %q", n, h), true
+		}
+		return fmt.Sprintf("%q not in %q", n, h), false
 	case []N:
 		// TODO: refactor this using slices.Contains
 		for _, v := range h {
 			if v == needle {
-				return true
+				return fmt.Sprintf("%v in %v", needle, haystack), true
 			}
 		}
-		return false
+		return fmt.Sprintf("%v not in %v", needle, haystack), false
 	default: // h is custom string type
 		hs := fmt.Sprintf("%v", haystack)
 		n := fmt.Sprintf("%v", needle)
-		return strings.Contains(hs, n)
+		if strings.Contains(hs, n) {
+			return fmt.Sprintf("%q in %q", n, hs), true
+		}
+		return fmt.Sprintf("%q not in %q", n, hs), false
 	}
 }
