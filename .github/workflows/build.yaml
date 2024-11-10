@@ -11,9 +11,9 @@ jobs:
         cache: true
     - run: make build
     - run: make test
-    - uses: codecov/codecov-action@v4
+    - uses: shogo82148/actions-goveralls@v1
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}k
+        path-to-profile: coverage.txt
 
   lint:
     runs-on: ubuntu-latest
