@@ -17,9 +17,11 @@ func Test(t *testing.T) {
 	test.Equal(t, 1, 1)
 	test.NotEqual(t, 1, 2)
 
+	test.Zero(t, 0)
 	test.Zero(t, time.Time{}.Local())
 	test.Zero(t, []string(nil))
 	test.NotZero(t, []string{""})
+	test.NotZero(t, true)
 
 	test.Nil(t, nil)
 	test.NotNil(t, errors.New(""))

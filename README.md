@@ -77,6 +77,15 @@ test.Nil(t, err)    // bad
 test.NotNil(t, err) // good
 ```
 
+### Zero/NotZero
+```go
+test.Zero(t, 0)
+test.Zero(t, time.Time{}.Local())
+test.Zero(t, []string(nil))
+test.NotZero(t, []string{""})
+test.NotZero(t, true)
+```
+
 ### Contains/NotContains
 ```go
 type mytype string
