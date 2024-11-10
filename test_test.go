@@ -51,9 +51,6 @@ func TestNot(t *testing.T) {
 	testFail(t, "got: 1", func(m *mockingT) {
 		test.NotEqual(m, 1, 1)
 	})
-	testFail(t, "len(want): 0; len(got): 1", func(m *mockingT) {
-		test.AllEqual(m, []string{}, []string{""})
-	})
 	testFail(t, "", func(m *mockingT) { // skip message test, local time is not predictable
 		test.NotZero(m, time.Time{}.Local())
 	})

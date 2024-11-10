@@ -20,8 +20,8 @@ func Example() {
 	test.DeepEqual(t, nil, []int{})                                                     // bad
 
 	s := []int{1, 2, 3}
-	test.AllEqual(t, []int{1, 2, 3}, s) // good
-	test.AllEqual(t, []int{3, 2, 1}, s) // bad
+	test.DeepEqual(t, []int{1, 2, 3}, s) // good
+	test.DeepEqual(t, []int{3, 2, 1}, s) // bad
 
 	var err error
 	test.Nil(t, err)    // good
@@ -46,7 +46,7 @@ func Example() {
 	// want: hello; got: world
 	// got: goodbye
 	// reflect.DeepEqual([]int(nil), []int{}) == false
-	// want: [3 2 1]; got: [1 2 3]
+	// reflect.DeepEqual([]int{3, 2, 1}, []int{1, 2, 3}) == false
 	// got: <nil>
 	// got: (O_o)
 	// "World" not in "hello, world"
